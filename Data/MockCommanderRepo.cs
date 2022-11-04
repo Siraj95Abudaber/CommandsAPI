@@ -19,9 +19,9 @@ namespace Commander.Data
         {
             var commands = new List<Command>
             {
-                new Command{Id = 0, HowTo="Eat fish", Line = "eate fish carfully", Platform = "on a plate"},
-                new Command{Id = 1, HowTo="Eat meat", Line = "eate fish carfully", Platform = "on a plate"},
-                new Command{Id = 2, HowTo="Eat stuff", Line = "eate fish carfully", Platform = "on a plate"}
+                new Command{Id = 0, HowTo="Eat fish", Line = "eat fish carfully", Platform = "on a plate"},
+                new Command{Id = 1, HowTo="Eat meat", Line = "eat fish carfully", Platform = "on a plate"},
+                new Command{Id = 2, HowTo="Eat stuff", Line = "eat fish carfully", Platform = "on a plate"}
             };
 
             return commands;
