@@ -12,29 +12,36 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+jobs:
+- job: Build and run api
+  steps:
+  - script: dotnet build --configuration $(buildConfiguration)
+    displayName: 'dotnet build $(buildConfiguration)'
 
-- task: CmdLine@2
-  displayName: 'Installing newman and its exporters'
-  inputs:
-    script: |
-      npm install -g newman
-      
-      npm install -g newman-reporter-htmlextra
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'run'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'run'
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-  inputs:
-    command: publish
-    publishWebProjects: false
-    projects: 'Commander.csproj'
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1
-  displayName: 'publish artifacts'
+
+- job: Run The test   
+  steps:
+  - task: CmdLine@2
+    displayName: 'Installing newman and its exporters'
+    inputs:
+      script: |
+        npm install -g newman
+        
+        npm install -g newman-reporter-htmlextra
+        
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'Commander.csproj'
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'publish artifacts'
