@@ -16,7 +16,7 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
 
-- script: 'start cmd.exe /c dotnet run'
+- script: 'dotnet run'
   displayName: 'Run the API'
 
 - task: DotNetCoreCLI@2
